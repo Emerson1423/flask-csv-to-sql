@@ -98,4 +98,4 @@ def download_file(filename):
         return "Archivo no encontrado", 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000, debug=True)
