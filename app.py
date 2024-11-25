@@ -68,8 +68,10 @@ def generate_sql(csv_path, table_name):
                     elif value == "":  # Si está vacío, es NULL
                         formatted_row.append("NULL")
                     else:  # Si es texto
-                        formatted_row.append(f"'{value.replace(\"'\", \"''\")}'")
-                values.append(f"({', '.join(formatted_row)})")
+                        # Evitar problemas con las comillas
+                        safe_value = "'" + value.replace("'", "''") + "'"
+                        formatted_row.append(safe_value)
+                values.append("(" + ", ".join(formatted_row) + ")")
 
                 # Escribir en bloques para evitar memoria excesiva
                 if len(values) >= 500:
@@ -97,4 +99,3 @@ def download_file(filename):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
